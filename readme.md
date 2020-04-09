@@ -21,3 +21,9 @@ In CLI put
 | home.php	   | secure		|
 | profile.php 	   | secure		|
 
+- Main usefull files
+
+Public part of files are index.php - frontend controller coresponding with post table ane with templates/list.php as view
+
+Private part of files are home.php - backend controller coresponding with post table ane with templates/home.php as view
+

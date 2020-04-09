@@ -24,6 +24,7 @@ if ($argv[1]) {
 	echo "crypt(".$argv[1].",$hash): ". crypt($argv[1],$hash)." \r\n";
 
 	// See the password_hash() example to see where this came from.
+	//       $2y$10$SfhYIDtn.iOuCW7zfoFLuuZHX6lja4lF4XA4JqNmpiH/.P3zB8JCa
 	$hash = '$2y$10$Q4vKWTjdZOCNVhOPbqTzCOFXFck9Vo3zBigwJLM0QHgdqsw0Yh2LS';
 	if (password_verify($argv[1], $hash)) echo "Password is valid!\r\n";
 	else echo "Invalid password.\r\n";
