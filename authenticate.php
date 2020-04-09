@@ -3,17 +3,8 @@
 
 	require_once 'config.php';
 
-//	function password_verify($formpass, $dbpass) {
-//	}
-
-	// Try and connect using the info above.
-	$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-	//$con = new PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_NAME", $DATABASE_USER, $DATABASE_PASS);
-
-	if ( mysqli_connect_errno() ) {
-		// If there is an error with the connection, stop the script and display the error.
-		exit('Failed to connect to MySQL: ' . mysqli_connect_error());
-	}
+	$con = new PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_NAME", $DATABASE_USER, $DATABASE_PASS);
+	$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	// Now we check if the data from the login form was submitted, isset() will check if the data exists.
 	if ( !isset($_POST['username'], $_POST['password']) ) {
@@ -21,27 +12,22 @@
 		exit('Please fill both the username and password fields!');
 	}
 
-
 	// Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-	if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
-		// Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
-		$stmt->bind_param('s', $_POST['username']);
+	if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = :un')) {
+		$stmt->bindParam(':un' , $_POST['username'], PDO::PARAM_STR, 50);
 		$stmt->execute();
-		// Store the result so we can check if the account exists in the database.
-		$stmt->store_result();
-
-		if ($stmt->num_rows > 0) {
-			$stmt->bind_result($id, $password);
-			$stmt->fetch();
+		
+		if ($stmt->rowCount() > 0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
 			// Account exists, now we verify the password.
 			// Note: remember to use password_hash in your registration file to store the hashed passwords.
-			if (password_verify($_POST['password'], $password)) {
+			if (password_verify($_POST['password'], $row['password'])) {
 				// Verification success! User has loggedin!
 				// Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
 				session_regenerate_id();
 				$_SESSION['loggedin'] = TRUE;
 				$_SESSION['name'] = $_POST['username'];
-				$_SESSION['id'] = $id;
+				$_SESSION['id'] = $row['id'];
 				header('Location: home.php');
 			} else {
 				echo 'Incorrect password!';
@@ -50,6 +36,6 @@
 			echo 'Incorrect username!';
 		}
 
-		$stmt->close();
+		$con = null;
 	}
 ?>
