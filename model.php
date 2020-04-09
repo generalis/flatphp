@@ -1,9 +1,10 @@
 <?php
-
 // model.php
 function open_database_connection()
 {
-    $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    require_once 'config.php';
+
+    $connection = new PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_NAME", $DATABASE_USER, $DATABASE_PASS);
 
     return $connection;
 }
