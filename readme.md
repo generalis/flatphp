@@ -13,10 +13,11 @@ In CLI put
 - Authenticate from:
 [Secure Login System with PHP and MySQL](https://codeshack.io/secure-login-system-php-mysql/)
 
-|-- login.html
-|-- style.css
-|-- authenticate.php
-|-- logout.php
-|-- home.php
-|-- profile.php 
+| File name        | 			|
+|------------------|:-------------------|
+| login.html	   | not secure		|
+| authenticate.php | main functions	|
+| logout.php	   |			|
+| home.php	   | secure		|
+| profile.php 	   | secure		|
 
