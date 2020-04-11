@@ -13,13 +13,16 @@ In CLI put
 ## Authenticate from:
 [Secure Login System with PHP and MySQL](https://codeshack.io/secure-login-system-php-mysql/)
 
-| File name        | 			|
-|------------------|:-------------------|
-| login.html	   | not secure		|
-| authenticate.php | main functions	|
-| logout.php	   |			|
-| home.php	   | secure		|
-| profile.php 	   | secure		|
+| File name         | 									|
+|-------------------|:----------------------------------|
+| login.php		    | not secure, controller			|
+| model.php		    | function authenticate()			|
+| logout.php	    | logout controller					|
+| home.php	  	    | controller with secure content	|
+| profile.php 	    | controller and view secure		|
+| login_form.php    | template of login form			|
+| login_success.php | template after success loged in	|
+| login_failure.php | template after failed loged in	|
 
 ## Main usefull files
 
