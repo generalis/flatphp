@@ -73,7 +73,6 @@ function authenticate()
 				$_SESSION['loggedin'] = TRUE;
 				$_SESSION['name'] = $_POST['username'];
 				$_SESSION['id'] = $row['id'];
-				header('Location: home.php');
 				$login_state = true;	
 			} else {
 				//echo 'Incorrect password!';
