@@ -91,3 +91,23 @@ function authenticate()
 
     return $login_state;
 }
+
+function get_all_profiles()
+{
+   	$connection = open_database_connection();
+
+	// We don't have the password or email info stored in sessions so instead we can get the results from the database.
+	$stmt = $connection->prepare('SELECT password, email FROM accounts WHERE id = ?');
+	// In this case we can use the account ID to get the account info.
+	$stmt->bindParam(1, $_SESSION['id'],PDO::PARAM_INT);
+	$stmt->execute();
+
+	$profiles = [];
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		$profiles[] = $row;
+	}
+
+	close_database_connection($connection);
+
+	return $profiles;
+}
