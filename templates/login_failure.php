@@ -1,13 +1,8 @@
-<!-- templates/login_failure.php -->
-<?php $title = 'Private part. List of Posts' ?>
+<?php $title = 'Incorect login or password' ?>
 
 <?php ob_start() ?>
-		<h1>Private part</h1>
-		<a href="profile.php">Profile</a>
-		<a href="logout.php">Logout</a>
-
-		<p>Incorect login or password</p>
-
+		<h1>Login failure</h1>
+		<a href="login.php">Go to login page</a>
 <?php $content = ob_get_clean() ?>
 
 <?php include 'layout.php' ?>

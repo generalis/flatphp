@@ -1,4 +1,3 @@
-<!-- templates/show.php -->
 <?php $title = $post['title'] ?>
 
 <?php ob_start() ?>

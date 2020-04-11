@@ -49,7 +49,7 @@ function authenticate()
 {
 	session_start();
 	$login_state = false;	
-    $connection = open_database_connection();
+   	$connection = open_database_connection();
 
 	// Now we check if the data from the login form was submitted, isset() will check if the data exists.
 	if ( !isset($_POST['username'], $_POST['password']) ) {
@@ -76,10 +76,12 @@ function authenticate()
 				header('Location: home.php');
 				$login_state = true;	
 			} else {
-				echo 'Incorrect password!';
+				//echo 'Incorrect password!';
+				$_SESSION['flashmessage'] ='Incorrect password!'; 
 			}
 		} else {
-			echo 'Incorrect username!';
+			//echo 'Incorrect username!';
+			$_SESSION['flashmessage'] ='Incorrect username!'; 
 		}
 
 		$connection = null;

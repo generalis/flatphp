@@ -1,4 +1,3 @@
-<!-- templates/login_success.php -->
 <?php $title = 'Private part. List of Posts' ?>
 
 <?php ob_start() ?>
