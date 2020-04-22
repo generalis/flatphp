@@ -10,12 +10,15 @@
 	require_once 'model.php';
 
 	if ($_SERVER["REQUEST_METHOD"] != "POST") {
-		$post = get_post_by_id($_GET['id']);
+		$post['id'] = 0;
+		$post['title'] = "";
+		$post['body'] = "";
+		$post['created_at'] = date("Y-m-d h:i:s");
 		require 'templates/show.php';
 	}
 	else
 	{
-		update_post_by_id($_POST['id'], $_POST['title'], $_POST['body']);
-		$post = get_post_by_id($_POST['id']);
-		require 'templates/show.php';
+		set_post($_POST['id'], $_POST['title'], $_POST['body']);
+		$posts = get_all_posts();
+		require 'templates/home.php';
 	}

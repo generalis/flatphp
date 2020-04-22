@@ -8,7 +8,8 @@
   <h2>Home Page</h2>
   <p>Welcome back, <?=$_SESSION['name']?>!</p>
 
-  <h1>List of Posts</h1>
+  <a href="new.php">New post</a>
+  <h3>List of Posts</h3>
   <ul>
 	<?php foreach ($posts as $post): ?>
 	 <li>

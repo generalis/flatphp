@@ -2,7 +2,7 @@
 // model.php
 function open_database_connection()
 {
-    require_once 'config.php';
+    require 'config.php';
 
     $connection = new PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_NAME", $DATABASE_USER, $DATABASE_PASS);
 
@@ -33,7 +33,7 @@ function get_post_by_id($id)
 {
     $connection = open_database_connection();
 
-    $query = 'SELECT created_at, title, body FROM post WHERE id=:id';
+    $query = 'SELECT id, created_at, title, body FROM post WHERE id=:id';
     $statement = $connection->prepare($query);
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
     $statement->execute();
@@ -43,6 +43,39 @@ function get_post_by_id($id)
     close_database_connection($connection);
 
     return $row;
+}
+
+function update_post_by_id($id, $title, $body)
+{
+    $connection = open_database_connection();
+
+    $query = 'UPDATE post SET title=:title, body=:body WHERE id=:id';
+    $statement = $connection->prepare($query);
+    $statement->bindValue(':title', $title, PDO::PARAM_STR);
+    $statement->bindValue(':body', $body, PDO::PARAM_STR);
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    $statement->execute();
+
+    $_SESSION['flashmessage'] ='Update successful!';
+
+    close_database_connection($connection);
+}
+
+function set_post($id, $title, $body)
+{
+    $connection = open_database_connection();
+
+    $query = "INSERT INTO post (id, title, body, created_at) VALUES (NULL, :title, :body, :created_at)";
+    $statement = $connection->prepare($query);
+    $statement->execute([
+		'title' => $title,
+		'body' => $body,
+		'created_at' => date("Y-m-d h:i:s")
+	]);
+
+    $_SESSION['flashmessage'] ='Insert data successful!';
+
+    close_database_connection($connection);
 }
 
 function authenticate()
