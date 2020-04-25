@@ -18,7 +18,7 @@ function get_all_posts()
 {
     $connection = open_database_connection();
 
-    $result = $connection->query('SELECT id, title FROM post');
+    $result = $connection->query('SELECT id, title, body, created_at FROM post');
 
     $posts = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
