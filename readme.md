@@ -33,3 +33,6 @@ Private part of files are home.php - backend controller coresponding with post t
 # Layout aquire form:
 [CV template](https://www.w3schools.com/w3css/w3css_templates.asp)
 
+## PHP basic pagination:
+[index.php and home.php include it](http://www.phpfreaks.com/tutorial/basic-pagination)
+
