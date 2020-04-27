@@ -18,7 +18,7 @@ function get_all_posts()
 {
     $connection = open_database_connection();
 
-    $result = $connection->query('SELECT id, title FROM post');
+    $result = $connection->query('SELECT id, title, body, created_at FROM post');
 
     $posts = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -27,6 +27,58 @@ function get_all_posts()
     close_database_connection($connection);
 
     return $posts;
+}
+
+function get_all_paginated_posts()
+{
+	$connection = open_database_connection();
+
+	// find out how many rows are in the table 
+	$result = $connection->query('SELECT COUNT(*) FROM post');
+	$r = $result->fetch(PDO::FETCH_NUM);
+	$numrows = $r[0];
+
+	// number of rows to show per page
+	//$rowsperpage = 10;
+	require 'config.php';
+	// find out total pages
+	$totalpages = ceil($numrows / $rowsperpage);
+
+	// get the current page or set a default
+	if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
+	   // cast var as int
+	   $currentpage = (int) $_GET['currentpage'];
+	} else {
+	   // default page num
+	   $currentpage = 1;
+	} // end if
+
+	// if current page is greater than total pages...
+	if ($currentpage > $totalpages) {
+	   // set current page to last page
+	   $currentpage = $totalpages;
+	} // end if
+	// if current page is less than first page...
+	if ($currentpage < 1) {
+	   // set current page to first page
+	   $currentpage = 1;
+	} // end if
+
+	// the offset of the list, based on current page 
+	$offset = ($currentpage - 1) * $rowsperpage;
+	$_SESSION['currentpage'] = $currentpage;
+	$_SESSION['totalpages'] = $totalpages;
+
+	// get the info from the db 
+	 $result = $connection->query("SELECT id, title, body, created_at FROM post LIMIT $offset, $rowsperpage");
+
+	$posts = [];
+	while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+	   $posts[] = $row;
+	}
+	close_database_connection($connection);
+
+	return $posts;
 }
 
 function get_post_by_id($id)

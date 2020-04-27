@@ -7,3 +7,6 @@ $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'myuser';
 $DATABASE_PASS = 'mypassword';
 $DATABASE_NAME = 'blog_db';
+
+// php basic pagination
+$rowsperpage = 2;

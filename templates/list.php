@@ -15,6 +15,9 @@
         </li>
         <?php endforeach ?>
     </ul>
+
+    <?php require 'pagination_links.php' ?>
+
 <?php $content = ob_get_clean() ?>
 
 <?php include 'layout.php' ?>
