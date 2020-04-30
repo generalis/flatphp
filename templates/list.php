@@ -14,7 +14,10 @@
 
         <?php endforeach ?>
 
-	<?php require 'pagination_links.php' ?>
+	<div class="w3-container">
+          <p align="center"><?php require 'pagination_links.php' ?></p>
+          <hr>
+         </div>
 
 <?php $content = ob_get_clean() ?>
 
