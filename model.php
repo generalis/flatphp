@@ -69,13 +69,56 @@ function get_all_paginated_posts()
 	$_SESSION['currentpage'] = $currentpage;
 	$_SESSION['totalpages'] = $totalpages;
 
-	// get the info from the db 
-	 $result = $connection->query("SELECT id, title, body, created_at FROM post LIMIT $offset, $rowsperpage");
 
-	$posts = [];
-	while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-	   $posts[] = $row;
+	//Our SQL query.
+	$sql = "SELECT id, title, body, created_at FROM post LIMIT $offset, $rowsperpage";
+ 
+	//Generate an MD5 hash from the SQL query above.
+	$sqlCacheName = md5($sql) . ".cache";
+ 
+	//The name of our cache folder.
+	//$cache = 'cache'; //is in config.php
+  
+	//Full path to cache file.
+	$cacheFile = $cache . "/" . $sqlCacheName;
+  
+	//Cache time in seconds. 60 * 60 = one hour.
+	//$cacheTimeSeconds = (60 * 60); //in config.php
+ 
+	//Our results array.
+	$results = array();
+ 
+	//If the file exists and the filemtime time is larger than
+	//our cache expiry time.
+	if(
+	    file_exists($cacheFile) && 
+	    (filemtime($cacheFile) > (time() - ($cacheTimeSeconds)))
+	){
+	    //$_SESSION['flashmessage'] = 'Cache file found. Use cache file instead of querying database.';
+	    //Get the contents of our cached file. 
+	    $fileContents = file_get_contents($cacheFile);
+	    //Decode the JSON back into an array.
+	    $posts = json_decode($fileContents, true);
+	} else {
+	    //$_SESSION['flashmessage'] = 'Valid cache file not found. Query database.';
+	    //Cache file doesn't exist or has expired.
+	    //Connect to MySQL using PDO.
+
+		// get the info from the db 
+		$result = $connection->query($sql);
+
+	    	$posts = [];
+		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		   $posts[] = $row;
+		}
+
+	    //Convert the results into JSON so that we can save them to our cache file.
+	    $resultsJSON = json_encode($posts);
+
+	    //Save the contents to our cache file.
+	    file_put_contents($cacheFile, $resultsJSON);
 	}
+
 	close_database_connection($connection);
 
 	return $posts;

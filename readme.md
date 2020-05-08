@@ -36,3 +36,9 @@ Private part of files are home.php - backend controller coresponding with post t
 ## PHP basic pagination:
 [index.php and home.php include it](http://www.phpfreaks.com/tutorial/basic-pagination)
 
+## PHP: Cache SQL results on file system.:
+[config.php and model.php include it](https://thisinterestsme.com/php-cache-sql-filesystem/)
+
+sudo chown -R www-data cache
+for develop
+sudo chmod 777 cache

@@ -10,3 +10,9 @@ $DATABASE_NAME = 'blog_db';
 
 // php basic pagination
 $rowsperpage = 2;
+
+//The name of our cache folder.
+$cache = 'cache';
+
+//Cache time in seconds. 60 * 60 = one hour.
+$cacheTimeSeconds = (60 * 60);
