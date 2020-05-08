@@ -30,9 +30,6 @@ Public part of files are index.php - frontend controller coresponding with post 
 
 Private part of files are home.php - backend controller coresponding with post table and with templates/home.php as view
 
-# Layout aquire form:
-[CV template](https://www.w3schools.com/w3css/w3css_templates.asp)
-
 ## PHP basic pagination:
 [index.php and home.php include it](http://www.phpfreaks.com/tutorial/basic-pagination)
 
